@@ -9,7 +9,7 @@ main();
 
 
 async function initialize(){
-    connection = await mysql.createConnection({host:'localhost', user: 'root', database: 'employeeupdate',})
+    connection = await mysql.createConnection({host:'localhost', user: 'root', database: 'employeeupdate_db',})
 
 }
 
@@ -18,17 +18,17 @@ async function main() {
     // get the client
     // create the connection
     const responseObject = await inquirer.prompt([ {
-        type: 'input',
-        name: 'first_name',
-        message: "What's your first name",
+        type: 'list',
+        name: 'menue',
+        message: "What would you like to do ",
+        choices:[
+          'view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role'
+        ]
+          
+           
       },
       {
-        type: 'input',
-        name: 'last_name',
-        message: "What's your last name",
-        default() {
-          return 'Doe';
-        },
+       
       }])
 
       console.log(responseObject)

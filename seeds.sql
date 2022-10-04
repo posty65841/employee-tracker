@@ -17,10 +17,15 @@ INSERT INTO employeeupdate_db.employee (first_name, last_name, role_id, manager_
 VALUES 
 ('Thomas', 'post', '1',  "null" ),
 ('Jackson', 'Wallis', '2', '1'),
-('Derik', 'Olssin', '5', '1' ),
-('Austin', 'Post', '3', '2' ),
-('Tommy', 'Blankenship', '4' '2' ),
-('Julius', 'Lee', '2', '2');
+('Derik', 'Olssin', '6', '1' ),
+('Austin', 'Post', '4', '2' ),
+('Tommy', 'Blankenship', '5' '2' ),
+('Julius', 'Lee', '3', '2');
+('Shea', 'Smith', '2', '1')
+('Brian', 'Hamfelt', '3', '2')
+('Jack', 'slater', '5', '2')
+('Luis' , 'Covas', '4', '2')
+
 
 -- role
 INSERT INTO employeeupdate_db.role (title, salary, department)

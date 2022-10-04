@@ -32,8 +32,8 @@ INSERT INTO employeeupdate_db.role (title, salary, department)
 VALUES 
 ('CEO', '100,000,000,', 'CEO' ),
 ('venuManager', '65,000','VenuManager'),
-('director', '55,000', 'Director' ),
-('capture', '50,000', 'Capture'),
-('camera', '75,000', 'Camera'), 
-('cloud', '300,000', 'Cloud')
+('streamDirector', '55,000', 'Director' ),
+('captureTech', '50,000', 'Capture'),
+('cameraOperator', '75,000', 'Camera'), 
+('cloudManagement', '300,000', 'Cloud')
 

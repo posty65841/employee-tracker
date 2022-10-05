@@ -22,7 +22,7 @@ async function main() {
     name: 'menu',
     message: "What would you like to do ",
     choices: [
-      'view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role'
+      'view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role ', 'exit'
     ]
 
   }])
@@ -31,30 +31,38 @@ async function main() {
   if (responseObject.menu === "view all departments") {
     viewAllDepartments()
 
-  } if (responseObject.menu === "view all roles") {
+  } else if (responseObject.menu === "view all roles") {
     viewAllRoles()
 
-  } if (responseObject.menu === "view all employees") {
+  } else if (responseObject.menu === "view all employees") {
     viewAllEmployees()
 
   }
-  if (responseObject.menu === "add a department") {
+  else if (responseObject.menu === "add a department") {
     addADepartment()
 
   }
-  if (responseObject.menu === "add a role") {
+  else if (responseObject.menu === "add a role") {
     addARole()
 
   }
-  if (responseObject.menu === "add an employee") {
+  else if (responseObject.menu === "add an employee") {
     addAEmployee()
 
   }
-  if (responseObject.menu === "update an employee role ") {
+  else if (responseObject.menu === "update an employee role ") {
     updateAEmployee()
 
   }
+  else {
+    process.exit()
+  }
 
+
+  
+  
+  
+}
 
 
 
@@ -69,14 +77,17 @@ async function main() {
     console.table(rows)
   }
   async function viewAllEmployees() {
-    const [rows] = await connection.execute(`SELECT * FROM employee;`)
+    // THEN I am presented with a formatted table showing employee data, including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
+    const [rows] = await connection.execute(`SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name, role.salary, concat(newemp.first_name, " " ,newemp.last_name) as manangername FROM employee left join role on employee.role_id =role.id left join department on role.department_id = department.id left join employee as newemp on newemp.id = employee.manager_id;`)
 
     console.table(rows)
+
+    main()
   }
   async function addADepartment() {
     const [rows] = await connection.execute(`SELECT * FROM department;`)
 
-   
+
   }
   async function addARole() {
     const [rows] = await connection.execute(`SELECT * FROM role;`)
@@ -84,50 +95,50 @@ async function main() {
 
   }
   async function addAEmployee() {
-    const [rows] = await connection.execute(`SELECT * FROM employee;`)
-     inquirer.prompt([
-       {
-         type: 'list',
-         name: 'departmentInsert',
-         message: 'what department is the employee working in? ',
-         choices:
-           [ 'capture', 'cloud', 'camera', 'venueManager', 'director', ]
-         
-       },
+    const [rows] = await connection.execute(`SELECT * From employee`)
+    console.table(rows)
+    const [roles] = await connection.execute(`SELECT * From role`)
+    console.log(roles)
+    let newEmployee = await inquirer.prompt([
       {
-      
-      type: 'input',
-      name: 'firstName',
-      message: " employee first name ?",
+        type: 'list',
+        name: 'role_id',
+        message: 'what role will the employee have? ',
+        choices: roles.map(role => ({ value: role.id, name: role.title }))
+
+
       },
       {
-      
-        type: 'input',
-        name: 'lastName',
-        message: " employee last name ?",
-        },
-        {
-      
-          type: 'input',
-          name: 'RoleId',
-          message: "",
-          },
-      
-    ])
-    
 
-    
+        type: 'input',
+        name: 'first_name',
+        message: " employee first name ?",
+      },
+      {
+
+        type: 'input',
+        name: 'last_name',
+        message: " employee last name ?",
+      },
+      {
+        type: 'list',
+        name: 'manager_id',
+        message: 'who is the manger? ',
+        choices: rows.map(emp => ({ value: emp.id, name: `${emp.first_name} ${emp.last_name}` }))
+
+      }
+
+    ])
+    console.log(newEmployee)
+    //  ` insert into employee set ?`
+    await connection.query(` insert into employee set ?`, newEmployee)
+    main()
   }
   async function updateAEmployee() {
     const [rows] = await connection.execute(`SELECT * FROM employee;`)
 
-    
+
   }
-
-
-  
-}
-
 
 
 

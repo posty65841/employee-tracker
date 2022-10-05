@@ -59,86 +59,136 @@ async function main() {
   }
 
 
-  
-  
-  
+
+
+
 }
 
 
 
-  async function viewAllDepartments() {
-    const [rows] = await connection.execute(`SELECT * FROM department;`)
-    console.log("department")
-    console.table(rows)
-  }
-  async function viewAllRoles() {
-    const [rows] = await connection.execute(`SELECT * FROM role;`)
+async function viewAllDepartments() {
+  const [rows] = await connection.execute(`SELECT * FROM department;`)
+  console.log("department")
+  console.table(rows)
+  main()
+}
+async function viewAllRoles() {
+  const [rows] = await connection.execute(`SELECT * FROM role;`)
 
-    console.table(rows)
-  }
-  async function viewAllEmployees() {
-    // THEN I am presented with a formatted table showing employee data, including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
-    const [rows] = await connection.execute(`SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name, role.salary, concat(newemp.first_name, " " ,newemp.last_name) as manangername FROM employee left join role on employee.role_id =role.id left join department on role.department_id = department.id left join employee as newemp on newemp.id = employee.manager_id;`)
+  console.table(rows)
+  main()
+}
+async function viewAllEmployees() {
+  // THEN I am presented with a formatted table showing employee data, including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
+  const [rows] = await connection.execute(`SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name, role.salary, concat(newemp.first_name, " " ,newemp.last_name) as manangername FROM employee left join role on employee.role_id =role.id left join department on role.department_id = department.id left join employee as newemp on newemp.id = employee.manager_id;`)
 
-    console.table(rows)
+  console.table(rows)
 
-    main()
-  }
-  async function addADepartment() {
-    const [rows] = await connection.execute(`SELECT * FROM department;`)
+  main()
+}
+async function addADepartment() {
+  const [rows] = await connection.execute(`SELECT * FROM department;`)
+  // WHEN I choose to add a department
+  // THEN I am prompted to enter the name of the department and that department is added to the database
+  let newDepartment = await inquirer.prompt([
+    
+    {
+
+      type: 'input',
+      name: 'name',
+      message: " name of the department  ?"
+    },
+   
+
+  ])
+  await connection.query(` insert into department set ?`, [newDepartment])
+
+  main()
+}
+async function addARole() {
+  const [rows] = await connection.execute(`SELECT * FROM role;`)
+  // WHEN I choose to add a role
+  // THEN I am prompted to enter the name, salary, and department for the role and that role is added to the database
+  let newRole = await inquirer.prompt([
+    
+    {
+
+      type: 'input',
+      name: 'title',
+      message: " name of the role  ?",
+    },
+    {
+
+      type: 'input',
+      name: 'salary',
+      message: " salary?",
+    },
+    {
+      type: 'input',
+      name: 'department_id',
+      message: 'department id ? '
+      
+      
+      
+
+    }
+
+  ])
+  console.log(newRole)
+  console.table(rows)
+  await connection.query(` insert into role set ?`, [newRole])
+  
+  main()
+}
+
+async function addAEmployee() {
+  const [rows] = await connection.execute(`SELECT * From employee`)
+  console.table(rows)
+  const [roles] = await connection.execute(`SELECT * From role`)
+  console.log(roles)
+  let newEmployee = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'role_id',
+      message: 'what role will the employee have? ',
+      choices: roles.map(role => ({ value: role.id, name: role.title }))
 
 
-  }
-  async function addARole() {
-    const [rows] = await connection.execute(`SELECT * FROM role;`)
+    },
+    {
 
+      type: 'input',
+      name: 'first_name',
+      message: " employee first name ?",
+    },
+    {
 
-  }
-  async function addAEmployee() {
-    const [rows] = await connection.execute(`SELECT * From employee`)
-    console.table(rows)
-    const [roles] = await connection.execute(`SELECT * From role`)
-    console.log(roles)
-    let newEmployee = await inquirer.prompt([
-      {
-        type: 'list',
-        name: 'role_id',
-        message: 'what role will the employee have? ',
-        choices: roles.map(role => ({ value: role.id, name: role.title }))
+      type: 'input',
+      name: 'last_name',
+      message: " employee last name ?",
+    },
+    {
+      type: 'list',
+      name: 'manager_id',
+      message: 'who is the manger? ',
+      choices: rows.map(emp => ({ value: emp.id, name: `${emp.first_name} ${emp.last_name}` }))
 
+    }
 
-      },
-      {
+  ])
+  console.log(newEmployee)
+  //  ` insert into employee set ?`
+  await connection.query(` insert into employee set ?`, newEmployee)
+  main()
+}
+async function updateAEmployee() {
+  const [rows] = await connection.execute(`SELECT * FROM employee;`)
+  // WHEN I choose to update an employee role
+  // THEN I am prompted to select an employee to update and their new role and this information is updated in the database
+  viewAllEmployees() 
 
-        type: 'input',
-        name: 'first_name',
-        message: " employee first name ?",
-      },
-      {
-
-        type: 'input',
-        name: 'last_name',
-        message: " employee last name ?",
-      },
-      {
-        type: 'list',
-        name: 'manager_id',
-        message: 'who is the manger? ',
-        choices: rows.map(emp => ({ value: emp.id, name: `${emp.first_name} ${emp.last_name}` }))
-
-      }
-
-    ])
-    console.log(newEmployee)
-    //  ` insert into employee set ?`
-    await connection.query(` insert into employee set ?`, newEmployee)
-    main()
-  }
-  async function updateAEmployee() {
-    const [rows] = await connection.execute(`SELECT * FROM employee;`)
-
-
-  }
+  main()
+}
 
 
 

@@ -76,27 +76,52 @@ async function main() {
   async function addADepartment() {
     const [rows] = await connection.execute(`SELECT * FROM department;`)
 
-    console.table(rows)
+   
   }
   async function addARole() {
     const [rows] = await connection.execute(`SELECT * FROM role;`)
 
 
-    console.table(rows)
   }
   async function addAEmployee() {
     const [rows] = await connection.execute(`SELECT * FROM employee;`)
-    inquirer
-    .prompt{
+     inquirer.prompt([
+       {
+         type: 'list',
+         name: 'departmentInsert',
+         message: 'what department is the employee working in? ',
+         choices:
+           [ 'capture', 'cloud', 'camera', 'venueManager', 'director', ]
+         
+       },
+      {
       
-    }
+      type: 'input',
+      name: 'firstName',
+      message: " employee first name ?",
+      },
+      {
+      
+        type: 'input',
+        name: 'lastName',
+        message: " employee last name ?",
+        },
+        {
+      
+          type: 'input',
+          name: 'RoleId',
+          message: "",
+          },
+      
+    ])
+    
 
-    console.table(rows)
+    
   }
   async function updateAEmployee() {
     const [rows] = await connection.execute(`SELECT * FROM employee;`)
 
-    console.table(rows)
+    
   }
 
 

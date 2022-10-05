@@ -8,103 +8,96 @@ initialize()
 main();
 
 
-async function initialize(){
-    connection = await mysql.createConnection({host:'localhost', user: 'root', database: 'employeeupdate_db',})
+async function initialize() {
+  connection = await mysql.createConnection({ host: 'localhost', user: 'root', database: 'employeeupdate_db', })
 
 }
 
 
 async function main() {
-    // get the client
-    // create the connection
-    const responseObject = await inquirer.prompt([ {
-        type: 'list',
-        name: 'menue',
-        message: "What would you like to do ",
-        choices:[
-          'view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role'
-        ]
-        
-          
-           
-      
-       
-      }])
+  // get the client
+  // create the connection
+  const responseObject = await inquirer.prompt([{
+    type: 'list',
+    name: 'menu',
+    message: "What would you like to do ",
+    choices: [
+      'view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role'
+    ]
 
-      console.log(responseObject)
-      if (responseObject.menu === "view all departments"){
-        viewAllDepartments()
-       
-    } if (responseObject.menu === "view all roles"){
-      viewAllRoles()
-     
-    } if (responseObject.menu === "view all employees"){
+  }])
+
+  console.log(responseObject)
+  if (responseObject.menu === "view all departments") {
+    viewAllDepartments()
+
+  } if (responseObject.menu === "view all roles") {
+    viewAllRoles()
+
+  } if (responseObject.menu === "view all employees") {
     viewAllEmployees()
-    
-    }
-    if (responseObject.menu === "add a department"){
-      addADepartment()
-      
-    }
-    if (responseObject.menu === "add a role"){
-      addARole()
-     
-    }
-    if (responseObject.menu === "add an employee"){
-      addAEmployee()
-      
-    }
-    if (responseObject.menu === "update an employee role "){
-      updateAEmployee()
-      
-    }
 
-
-
-
-    async function viewAllDepartments(){
-      const [rows] = await connection.execute(`SELECT * FROM department;`)
-      console.log("department")
-      console.table(rows)
   }
-    async function viewAllRoles(){
-    const [rows] = await connection.execute(`SELECT * FROM role;`)
-    
-    console.table(rows)
+  if (responseObject.menu === "add a department") {
+    addADepartment()
+
   }
-  async function viewAllEmployees(){
-    const [rows] = await connection.execute(`SELECT * FROM employee;`)
-    
-    console.table(rows)
+  if (responseObject.menu === "add a role") {
+    addARole()
+
   }
-  async function addADepartment(){
+  if (responseObject.menu === "add an employee") {
+    addAEmployee()
+
+  }
+  if (responseObject.menu === "update an employee role ") {
+    updateAEmployee()
+
+  }
+
+
+
+
+  async function viewAllDepartments() {
     const [rows] = await connection.execute(`SELECT * FROM department;`)
-    
+    console.log("department")
     console.table(rows)
   }
-  async function addARole(){
+  async function viewAllRoles() {
     const [rows] = await connection.execute(`SELECT * FROM role;`)
-   
+
     console.table(rows)
   }
-  async function addAEmployee(){
+  async function viewAllEmployees() {
     const [rows] = await connection.execute(`SELECT * FROM employee;`)
-    
+
     console.table(rows)
   }
-  async function updateAEmployee(){
+  async function addADepartment() {
+    const [rows] = await connection.execute(`SELECT * FROM department;`)
+
+    console.table(rows)
+  }
+  async function addARole() {
+    const [rows] = await connection.execute(`SELECT * FROM role;`)
+
+
+    console.table(rows)
+  }
+  async function addAEmployee() {
     const [rows] = await connection.execute(`SELECT * FROM employee;`)
+
+    console.table(rows)
+  }
+  async function updateAEmployee() {
+    const [rows] = await connection.execute(`SELECT * FROM employee;`)
+
+    console.table(rows)
+  }
+
+
   
-    console.table(rows)
 }
-
-
-    // query database
-    
-
-      // UPDATE
-      // UPDATE employeeupdate_db.employee SET first_name = 'New First Name', last_name = 'New Last Name' WHERE id = 9000;
-  }
 
 
 

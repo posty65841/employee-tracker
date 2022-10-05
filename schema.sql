@@ -10,12 +10,13 @@ CREATE TABLE department (
   
   name VARCHAR(30) NOT NULL
 );
+
 CREATE TABLE role (
   
-  id: INT NOT NULL auto_increment primary key ,
-  title: VARCHAR(30) NOT NULL,
-  salary: DECIMAL,
-  department_id: INT,
+  id INT NOT NULL auto_increment primary key ,
+  title VARCHAR(30) NOT NULL,
+  salary DECIMAL,
+  department_id INT,
 
   
 );
@@ -24,13 +25,13 @@ CREATE TABLE role (
 CREATE TABLE employee (
   
   id INT NOT NULL auto_increment primary key ,
-  first_name: VARCHAR(30) 
+  first_name VARCHAR(30),
 
-last_name: VARCHAR(30)
+last_name VARCHAR(30),
 
-role_id: INT 
+role_id INT, 
 
-manager_id: INT
+manager_id INT,
   
   
 );

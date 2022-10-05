@@ -15,25 +15,24 @@ VALUES ('Cloud');
 -- employee
 INSERT INTO employeeupdate_db.employee (first_name, last_name, role_id, manager_id)
 VALUES 
-('Thomas', 'post', '1',  "null" ),
+('Thomas', 'post', '1',  "1" ),
 ('Jackson', 'Wallis', '2', '1'),
 ('Derik', 'Olssin', '6', '1' ),
 ('Austin', 'Post', '4', '2' ),
-('Tommy', 'Blankenship', '5' '2' ),
-('Julius', 'Lee', '3', '2');
-('Shea', 'Smith', '2', '1')
-('Brian', 'Hamfelt', '3', '2')
-('Jack', 'slater', '5', '2')
-('Luis' , 'Covas', '4', '2')
+('Tommy', 'Blankenship', '5', '2' ),
+('Julius', 'Lee', '3', '2'),
+('Shea', 'Smith', '2', '1'),
+('Brian', 'Hamfelt', '3', '2'),
+('Jack', 'slater', '5', '2'),
+('Luis' , 'Covas', '4', '2');
 
 
--- role
-INSERT INTO employeeupdate_db.role (title, salary, department)
+
+INSERT INTO employeeupdate_db.role (title, salary, department_id)
 VALUES 
-('CEO', '100,000,000,', 'CEO' ),
-('venuManager', '65,000','VenuManager'),
-('streamDirector', '55,000', 'Director' ),
-('captureTech', '50,000', 'Capture'),
-('cameraOperator', '75,000', 'Camera'), 
-('cloudManagement', '300,000', 'Cloud')
-
+('CEO', 100000000, 1 ),
+('venueManager', 65000,2),
+('streamDirector', 55000, 3 ),
+('captureTech', 50000, 4),
+('cameraOperator', 75000, 5), 
+('cloudManagement', 300000, 6);

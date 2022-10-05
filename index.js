@@ -86,6 +86,10 @@ async function main() {
   }
   async function addAEmployee() {
     const [rows] = await connection.execute(`SELECT * FROM employee;`)
+    inquirer
+    .prompt{
+      
+    }
 
     console.table(rows)
   }

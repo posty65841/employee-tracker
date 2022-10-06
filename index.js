@@ -135,7 +135,7 @@ async function addARole() {
 
   ])
   console.log(newRole)
-  console.table(roles)
+  // console.table(role)
   await connection.query(` insert into role set ?`, [newRole])
   
   main()

@@ -182,7 +182,7 @@ async function addAEmployee() {
   main()
 }
 async function updateAEmployee() {
-  const [employees] = await connection.execute(`SELECT first_name as name , id as value from  FROM employee;`)
+  const [employees] = await connection.execute(`SELECT first_name as name , id as value  FROM employee;`)
   const [role] = await connection.execute(`SELECT  id as value, title as name  FROM role;`)
   // WHEN I choose to update an employee role
   // THEN I am prompted to select an employee to update and their new role and this information is updated in the database
@@ -190,24 +190,32 @@ async function updateAEmployee() {
   let updatedEmployee = await inquirer.prompt([
     {
       type: 'list',
-      name: 'employee_id',
+      name: 'id',
       message: 'what employee would you like to update? ',
-      choices: employees
+       choices: employees
 
 
     },
    
     {
       type: 'list',
-      name: 'title',
+      name: 'manager',
       message: 'who is the manager? ',
+      choices: employees
+
+    },
+    {
+      type: 'list',
+      name: 'role',
+      message: 'what is their new role? ',
       choices: role
 
     }
 
   ])
-  await connection.query(` insert into employee set ?`, [updatedEmployee])
-   console.log(updatedRole)
+  await connection.query(` update employee set ? where ?`, [{manager_id:updatedEmployee
+    .manager},{id:updatedEmployee.id}])
+   console.log(updatedEmployee)
  
   main()
 }

@@ -135,7 +135,7 @@ async function addARole() {
 
   ])
   console.log(newRole)
-  console.table(rows)
+  console.table(roles)
   await connection.query(` insert into role set ?`, [newRole])
   
   main()
@@ -170,7 +170,7 @@ async function addAEmployee() {
     {
       type: 'list',
       name: 'manager_id',
-      message: 'who is the manger? ',
+      message: 'who is the manager? ',
       choices: rows.map(emp => ({ value: emp.id, name: `${emp.first_name} ${emp.last_name}` }))
 
     }
@@ -182,11 +182,33 @@ async function addAEmployee() {
   main()
 }
 async function updateAEmployee() {
-  const [rows] = await connection.execute(`SELECT * FROM employee;`)
+  const [employees] = await connection.execute(`SELECT first_name as name , id as value from  FROM employee;`)
+  const [role] = await connection.execute(`SELECT  id as value, title as name  FROM role;`)
   // WHEN I choose to update an employee role
   // THEN I am prompted to select an employee to update and their new role and this information is updated in the database
-  viewAllEmployees() 
+  
+  let updatedEmployee = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'employee_id',
+      message: 'what employee would you like to update? ',
+      choices: employees
 
+
+    },
+   
+    {
+      type: 'list',
+      name: 'title',
+      message: 'who is the manager? ',
+      choices: role
+
+    }
+
+  ])
+  await connection.query(` insert into employee set ?`, [updatedEmployee])
+   console.log(updatedRole)
+ 
   main()
 }
 
